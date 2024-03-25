@@ -1,7 +1,5 @@
-// Criando nossos produtos
-
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('products', {
       id: {
         type: Sequelize.INTEGER,
@@ -32,14 +30,11 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
-      }
+      },
     })
   },
 
-
-  down: async (queryInterface) => {
-    await queryInterface.dropTable('products');
-
-  }
-
-};
+  async down(queryInterface) {
+    await queryInterface.dropTable('products')
+  },
+}
