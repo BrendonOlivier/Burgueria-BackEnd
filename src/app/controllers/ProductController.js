@@ -1,6 +1,6 @@
 import * as Yup from 'yup' // Estou pegando tudo ( * ) que da biblioteca yup e chamando de ' Yup '
 import Product from '../models/Product'
-
+import Category from '../models/Category'
 class ProductController {
     async store(request, response) {
         const schema = Yup.object().shape({
@@ -29,15 +29,21 @@ class ProductController {
         return response.json(product)
     }
 
-   catch (err){
+    catch(err) {
         console.log(err)
     }
-    
+
     async index(request, response) {
 
-        const products = await Product.findAll()
+        const products = await Product.findAll({
+            include: [{
+                model: Category,
+                as: 'category',
+                attributes: ['id', 'name']
+            }]
+        })
 
-        
+
         return response.json(products)
     }
 }
