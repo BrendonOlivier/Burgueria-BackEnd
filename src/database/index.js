@@ -16,9 +16,12 @@ class Database {
         this.init()
     }
 
+    // Quando a aplicação inicia, precisamos dizer que existe conexões e relacionamentos antes da aplicação iniciar
+
     init() {
         this.connection = new Sequelize(configDataBase)
-        models.map(model => model.init(this.connection))
+        models.map(model => model.init(this.connection)).map(
+            (model) => model.associate && model.associate(this.connection.models))
     }
 }
 

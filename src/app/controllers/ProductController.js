@@ -6,7 +6,7 @@ class ProductController {
         const schema = Yup.object().shape({
             name: Yup.string().required(),
             price: Yup.string().required(),
-            category: Yup.string().required(),
+            category_id: Yup.number().required(),
         })
 
 
@@ -17,16 +17,20 @@ class ProductController {
             return response.status(400).json({ error: err.errors })
         }
         const { filename: path } = request.file
-        const { name, price, category } = request.body
+        const { name, price, category_id } = request.body
 
         const product = await Product.create({
             name,
             price,
-            category,
+            category_id,
             path,
         })
 
         return response.json(product)
+    }
+
+   catch (err){
+        console.log(err)
     }
     
     async index(request, response) {
